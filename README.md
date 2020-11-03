@@ -1,4 +1,4 @@
-# Scritps written in Python
+# Scripts written in Python
 
 **Split a FASTA file into several**
 
