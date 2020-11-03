@@ -2,14 +2,24 @@
 
 #%% Imports
 import argparse
-from Bio import SeqIO
 
+#%% Function definitions
 def convert_aln2fasta(infile, outfile):
-	records = SeqIO.parse(infile, "clustal")
-	dict_records = {}
-	for rec in records:
-		dict_records[rec.id] = rec.seq
-
+	with open(infile,'rt') as inputfile:
+		dict_records = {}
+		ALN = inputfile.readlines()
+		for i, line in enumerate(ALN):
+			if line[0] == '' or line[0] == ' ' or line[0] == '\n':
+				pass
+			else:
+				if i > 0:
+					line = line.rstrip()
+					columns = " ".join(line.split())
+					elements = columns.split(' ')
+					if elements[0] not in dict_records and len(elements) > 1:
+						dict_records[elements[0]] = elements[1]
+					else:
+						dict_records[elements[0]] += elements[1]
 	with open(outfile, 'wt') as OUT:
 		for record in sorted(dict_records.keys()):
 			OUT.write(">"+record+"\n"+str(dict_records[record])+"\n")
