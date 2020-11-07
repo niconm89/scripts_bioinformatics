@@ -8,4 +8,8 @@
 
 - [clustalw2fasta.py](python_utils/clustalw2fasta.py)
 
+**Convert a FASTA to PHYLIP and PHYLIP to FASTA**
+
+- [fasta2phylip.py](python_utils/fasta2phylip.py)
+
 
