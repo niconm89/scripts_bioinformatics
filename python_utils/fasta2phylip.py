@@ -102,7 +102,7 @@ def do_alignment(seqs_dict, format_mode, format_aln, header, outfile):
 		
 		if format_aln == "sequential":
 			for record in seqs_dict.items():
-				seq = spaces_in_sequence(record[1])
+				seq = spaces_in_sequence(record[1],format_mode)
 				id_seq = record[0]
 				id_len = len(id_seq)
 				line_aln = ''
@@ -119,7 +119,7 @@ def do_alignment(seqs_dict, format_mode, format_aln, header, outfile):
 			for idseq in id_seqs:
 				id_len = len(idseq)
 				seq = seqs_dict[idseq][0:20]
-				seq_region = spaces_in_sequence(seq)
+				seq_region = spaces_in_sequence(seq,format_mode)
 				firs_line_seq = ''
 				if format_mode == 'strict':
 					nspaces = 10 - id_len #at this position id_len <= 10
@@ -137,15 +137,18 @@ def do_alignment(seqs_dict, format_mode, format_aln, header, outfile):
 					i += 30
 				for idseq in id_seqs:
 					seq = seqs_dict[idseq][i:i+30]
-					seq_region = spaces_in_sequence(seq)
+					seq_region = spaces_in_sequence(seq,format_mode)
 					OUT.write(seq_region+"\n")
 				OUT.write("\n")			
 #end do_alignment
 
-def spaces_in_sequence(sequence):
+def spaces_in_sequence(sequence,format_mode):
 	aux_seq = ''
-	for i in range(0,len(sequence),10):
-		aux_seq += sequence[i:i+10] + ' '
+	if format_mode == 'strict':
+		for i in range(0,len(sequence),10):
+			aux_seq += sequence[i:i+10] + ' '
+	else:
+		aux_seq = sequence
 	return	aux_seq[:-1]	
 
 def do_header(nseqs, nchars):
