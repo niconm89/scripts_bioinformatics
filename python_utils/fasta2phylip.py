@@ -7,7 +7,7 @@ import re
 
 
 #%% Function definitions
-def convert_fasta2phylip(infile, outfile, mode, aln_format):
+def convert_fasta2phylip(infile, outfile, mode, aln_type, aln_format):
 	dict_seqs = {}
 	with open(infile,'rt') as inputfile:
 		FASTA = inputfile.readlines()
@@ -23,7 +23,7 @@ def convert_fasta2phylip(infile, outfile, mode, aln_format):
 			else:
 				dict_seqs[name] = dict_seqs[name] + line
 	if check_len(dict_seqs):
-		if check_alphabet(dict_seqs):
+		if check_alphabet(dict_seqs, aln_type):
 			name_seqs = list(dict_seqs.keys())
 			nseqs = len(name_seqs)
 			len_aln = len(dict_seqs[name_seqs[0]])
@@ -151,9 +151,15 @@ def spaces_in_sequence(sequence):
 def do_header(nseqs, nchars):
 	return str(nseqs) + ' ' + str(nchars)
 
-def check_alphabet(seqs_dict):
+def check_alphabet(seqs_dict, aln_type):
 	checking = True
-	alphabet = ['A','G','C','T','U','Y','R','W','S','K','M','B','D','H','V','X','N','?','O','-']
+	alphabet_nuc = ['A','G','C','T','U','Y','R','W','S','K','M','B','D','H','V','X','N','?','O','-'] #IUPAC
+	alphabet_prot = ['A','R','N','D','B','C','Q','E','G','Z','H','I','L','K','M','F','P','S','T','W','Y','V','-','*','X','?'] #IUB standard abbreviations
+	alphabet = []
+	if aln_type == 'nuc':
+		alphabet = alphabet_nuc
+	else:
+		alphabet = alphabet_prot	
 	for seq in seqs_dict.items():
 		for i,character in enumerate(seq[1].upper()):
 			if character not in alphabet:
@@ -207,7 +213,8 @@ def usage():
 
 	parser.add_argument('--infile', metavar='<Input File>', type=str, required=True, help='Path to the fasta alignment file to convert. All sequences must have the same length (number of characters).')
 	parser.add_argument('--outfile', metavar='<Output File>', type=str, required=False, default = 'convertion.phylip', help='Path where the phylip format file will be placed. By default, the output file will be placed in the current working directory. [default: convertion.phylip]')
-	parser.add_argument('--mode', type=str, required=False, choices=['strict', 'relaxed'], default='strict', help='Convertion mode. In strict mode, id sequence have to be shorter than 10, otherwise it will be truncated. [default: strict]')
+	parser.add_argument('--alntype', type=str, required=False, choices=['nuc', 'prot'], default='nuc', help='Type of characters in alignment. [default = nuc]')
+	parser.add_argument('--mode', type=str, required=False, choices=['strict', 'relaxed'], default='strict', help='Convertion mode. In strict mode, id sequence must be up to 10, otherwise it will be truncated. [default: strict]')
 	parser.add_argument('--format', type=str, required=False, choices=['sequential', 'interleaved'], default='sequential', help='Alignment format. [default: sequential]')
 	parser.add_argument('--reverse', action='store_true', required=False, help='phylip2fasta mode. The program will expect a phylip format file to convert to a fasta file. If not indicated (--mode), the input file is assumed to have a strict phylip format. If taxon name has a space, e.g. H. sapiens, it will be remove like H.sapiens.')
 	parser.add_argument('--nogaps', action='store_true', required=False, help='Filter out gaps from the alignment. If declare, is mandatory to state the reverse mode (--reverse).')
@@ -223,7 +230,7 @@ def main():
 		if args.nogaps:
 			print("--nogaps option only compatible with reverse mode.")
 			exit(1)		
-		convert_fasta2phylip(args.infile,args.outfile,args.mode,args.format)
+		convert_fasta2phylip(args.infile,args.outfile,args.alntype,args.mode,args.format)
 	else:
 		if args.nogaps:
 			convert_phylip2fasta(args.infile,args.outfile,args.mode, True)
