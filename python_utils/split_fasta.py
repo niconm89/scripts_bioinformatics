@@ -1,5 +1,9 @@
 #!/usr/bin/python
+"""
+Created on Tue Nov 07 12:11:56 2020
 
+@author: Nicolás Nahuel Moreyra (niconm89@gmail.com)
+"""
 #%% Imports
 import argparse
 
