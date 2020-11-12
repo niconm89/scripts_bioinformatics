@@ -6,6 +6,7 @@ Created on Tue Nov 07 12:11:56 2020
 """
 #%% Imports
 import argparse
+import os
 
 #%% Function definitions
 def convert_aln2fasta(infile, outfile):

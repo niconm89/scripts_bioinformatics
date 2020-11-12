@@ -13,8 +13,7 @@ def output_name(fullpath):
 	last_part = fullpath
 	if '/' in fullpath: #true if the fullpath to input file was introduced
 		parts = fullpath.split('/') #split fullpath
-		nparts = len(parts) #numbers of seccions (/)
-		last_part = parts[nparts-1] #get the last one (filename)
+		last_part = parts[-1] #get the last one (filename)
 	inname = last_part.split('.')[0] #keep name only, exclude file extention
 	return inname
 	
