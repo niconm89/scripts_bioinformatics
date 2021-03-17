@@ -12,4 +12,7 @@
 
 - [fasta2phylip.py](python_utils/fasta2phylip.py)
 
+**Extract sequences from a FASTA file
+
+- [extract_seqs_from_FASTA.py](python_utils/extract_seqs_from_FASTA.py)
 
