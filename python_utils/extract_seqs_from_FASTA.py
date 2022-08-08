@@ -46,7 +46,7 @@ def read_IDs(IDsfile):
 	with open(IDsfile,'rt') as inputIDs:
 		lines = inputIDs.readlines()
 		for line in lines:
-			id_seq = line[1:].split(" ")[0]
+			id_seq = line.split(" ")[0]
 			IDs_list.append(id_seq.rstrip())
 	return IDs_list
 #
