@@ -46,7 +46,8 @@ def read_IDs(IDsfile):
 	with open(IDsfile,'rt') as inputIDs:
 		lines = inputIDs.readlines()
 		for line in lines:
-			IDs_list.append(line.rstrip())
+			id_seq = line.split(" ")[0]
+			IDs_list.append(id_seq.rstrip())
 	return IDs_list
 #
 def check_gzipped(inputfile):
