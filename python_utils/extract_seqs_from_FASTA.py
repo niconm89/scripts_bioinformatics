@@ -132,7 +132,7 @@ def extract_byIDs(sequences, IDs_list):
 		if ID in sequences:
 			subsequences[ID] = sequences[ID]
 		else:
-			print("Sequence ID " + str(ID) + " not found. ID avoided...")
+			print("Sequence ID " + str(ID) + " not found. ID skipped...")
 	return subsequences
 #end
 
