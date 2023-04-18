@@ -1,4 +1,4 @@
-#!/home/nmoreyra/Soft/miniconda3/bin/python
+#!/usr/bin/env python
 
 """
 Created on Tue Mar 17 09:11:56 2021
