@@ -1,16 +1,32 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Aug  1 10:06:21 2022
 
-@author: Nicolás Nahuel Moreyra (niconm89@gmail.com)
 """
+Script: gbk2fasta.py
+Author: Nicolás Nahuel Moreyra (niconm89@gmail.com)
+GitHub: @niconm89
+Date: Mon Aug  1 10:06:21 2022
+
+Description:
+    
+Usage:
+    python gbk2fasta.py
+
+Requirements:
+    - Biopython, time
+"""
+
 #%% Imports
 import argparse
 from Bio import SeqIO
 from time import time
 
 #%% Functions definition
+def revcomp(sequence):
+	complement = {'A': 'T', 'C': 'G', 'G': 'C', 'T': 'A'}
+	reverse_complement = "".join(complement.get(base, base) for base in reversed(sequence))
+	return reverse_complement
+#end
 def dbk2fasta(GBK, FASTA):
 	with open(GBK, 'rt') as input_handle, open(FASTA, 'wt') as output_handle:
 		sequences = SeqIO.parse(input_handle, "genbank")
@@ -19,15 +35,10 @@ def dbk2fasta(GBK, FASTA):
 #end
 def dbk2fasta_split(GBK, FASTA):
 	dbk2fasta(GBK, FASTA)
-	#forward_seq_name = ''
-	forward_sequence = ''
-	reverse_sequence = ''
+	mt_sequence = ''
 	with open(FASTA, 'rt') as INPUT:
 		for seq_record in SeqIO.parse(INPUT, "fasta"):
-			#sequence_complete[seq_record.id] = repr(seq_record.seq)
-			#forward_seq_name = seq_record.id
-			forward_sequence = str(seq_record.seq)
-			reverse_sequence = str(seq_record.seq.reverse_complement())
+			mt_sequence = str(seq_record.seq)
 
 	coordinates = {}
 	with open(GBK, 'rt') as input_handle, open(FASTA, 'wt') as output_handle:
@@ -35,8 +46,6 @@ def dbk2fasta_split(GBK, FASTA):
 			for seq_feature in seq_record.features:
 				if seq_feature.type == "gene":
 					if 'product' in seq_feature.qualifiers:
-						print(seq_feature.qualifiers['product'][0]+"\t"+str(seq_feature.location))
-						#'tRNA-Phe': FeatureLocation(ExactPosition(0), ExactPosition(63), strand=1)
 						name = seq_feature.qualifiers['product'][0]
 					else:
 						name = seq_feature.qualifiers['gene'][0]
@@ -51,9 +60,10 @@ def dbk2fasta_split(GBK, FASTA):
 			#coordinates[name] = [start, end, strand]
 			output_handle.write(">" + feature + "\n")
 			if coords[2] == '-':
-				output_handle.write(reverse_sequence[coords[0]:coords[1]] + "\n")
+				reverse_gene = revcomp(mt_sequence[coords[0]:coords[1]])
+				output_handle.write(reverse_gene + "\n")
 			else:
-				output_handle.write(forward_sequence[coords[0]:coords[1]] + "\n")
+				output_handle.write(mt_sequence[coords[0]:coords[1]] + "\n")
 #end
 #%% Menu -> is executed when the script is called independently
 def usage():

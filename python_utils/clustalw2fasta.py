@@ -1,9 +1,21 @@
 #!/usr/bin/env python3
-"""
-Created on Tue Nov 07 12:11:56 2020
 
-@author: Nicolás Nahuel Moreyra (niconm89@gmail.com)
 """
+Script: clustalw2fasta.py
+Author: Nicolás Nahuel Moreyra (niconm89@gmail.com)
+GitHub: @niconm89
+Date: Tue Nov 07 12:11:56 2020
+
+Description:
+    
+
+Usage:
+    python clustalw2fasta.py -h
+
+Requirements:
+    - argparse, os
+"""
+
 #%% Imports
 import argparse
 import os

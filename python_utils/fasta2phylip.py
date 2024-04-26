@@ -1,16 +1,32 @@
 #!/usr/bin/env python3
+
 """
-Created on Tue Nov 07 12:11:56 2020
+Created on 
 
 @author: Nicolás Nahuel Moreyra (niconm89@gmail.com)
 """
+"""
+Script: fasta2phylip.py
+Author: Nicolás Nahuel Moreyra (niconm89@gmail.com)
+GitHub: @niconm89
+Date: Tue Nov 07 12:11:56 2020
+
+Description:
+    
+
+Usage:
+    python fasta2phylip.py -h
+
+Requirements:
+    - argparse, re, os
+"""
+
 #%% Imports
 import argparse
 import os
 import re
 
-
-#%% Function definitions
+#%% Functions
 def convert_fasta2phylip(infile, outfile, mode, aln_type, aln_format):
 	dict_seqs = {}
 	with open(infile,'rt') as inputfile:

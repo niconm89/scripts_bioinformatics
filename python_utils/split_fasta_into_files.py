@@ -1,9 +1,20 @@
 #!/usr/bin/env python3
-"""
-Created on Tue Nov 07 12:11:56 2020
 
-@author: Nicolás Nahuel Moreyra (niconm89@gmail.com)
 """
+Script: split_fasta_into_files.py
+Author: Nicolás Nahuel Moreyra (niconm89@gmail.com)
+GitHub: @niconm89
+Date: Tue Nov 07 12:11:56 2020
+
+Description:
+    
+Usage:
+    python split_fasta_into_files.py
+
+Requirements:
+    - argparse
+"""
+
 #%% Imports
 import argparse
 
